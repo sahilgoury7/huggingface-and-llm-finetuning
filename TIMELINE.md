@@ -22,9 +22,9 @@ Har din ke 5–6 ghante ko hum **3 structured blocks** me divide karenge:
 | **Day 1** | **2026-09-15** | **Phase 1: HF Ecosystem, Pipelines & AutoClasses** | 5 Pipelines run, AutoModel QA, 3-Part Notes compiled | 🟢 **Completed** |
 | **Day 2** | **2026-09-16** | **Phase 2: Tokenization Mechanics & Datasets** | BPE/WordPiece, Dynamic Padding, `datasets` `.map()`, VRAM Math | 🟢 **Completed** |
 | **Day 3** | **2026-09-17** | **Phase 3: Transfer Learning & HF Trainer API** | `TrainingArguments`, Loss, Metrics, Dynamic Collators, Evaluation | 🟢 **Completed** |
-| **Day 4** | **2026-09-18** | **Phase 4: PEFT, LoRA Math & 4-Bit Quantization** | Matrix decomposition ($B \times A$), Rank ($r$), Alpha, NF4 bitsandbytes | 🟡 **Active Now** |
-| **Day 5** | **2026-09-19** | **Phase 5: SFT & Unsloth GPU Acceleration** | Prompt formatting, Completion-only loss, Unsloth T4 setup | ⚪ Pending |
-| **Day 6** | **2026-09-20** | **Phase 6: Capstone Part 1: QA Assistant Fine-Tuning** | `data_science.csv` training run on Colab T4, Loss curve analysis | ⚪ Pending |
+| **Day 4** | **2026-09-18** | **Phase 4: PEFT, LoRA Math & 4-Bit Quantization** | Matrix decomposition ($B \times A$), Rank ($r$), Alpha, NF4 bitsandbytes | 🟢 **Completed** |
+| **Day 5** | **2026-09-19** | **Phase 5: SFT & Unsloth GPU Acceleration** | Prompt formatting, Completion-only loss, Unsloth T4 setup | 🟢 **Completed** |
+| **Day 6** | **2026-09-20** | **Phase 6: Capstone Part 1: QA Assistant Fine-Tuning** | `data_science.csv` training run on Colab T4, Loss curve analysis | 🟡 **Active Now** |
 | **Day 7** | **2026-09-21** | **Phase 7: Capstone Part 2: Eval, LoRA Merge & GGUF** | RAG/LLM Eval, LoRA merge, GGUF export for local Ollama/vLLM | ⚪ Pending |
 
 ---
@@ -95,9 +95,9 @@ Har din ke 5–6 ghante ko hum **3 structured blocks** me divide karenge:
 
 ---
 
-### 🟡 Day 4 (Friday, 2026-09-18) — Phase 4: PEFT, LoRA Math & 4-Bit Quantization
-* **Status:** 🟡 **IN PROGRESS (Active Now)**
-* **Target Time:** 5 – 6 Hours
+### 🟢 Day 4 (Friday, 2026-09-18) — Phase 4: PEFT, LoRA Math & 4-Bit Quantization
+* **Status:** 🟢 **COMPLETED (100%)**
+* **Time Spent:** ~5 Hours
 * **Syllabus & Schedule:**
   - **Hours 1–2.5 (Core Math & Architecture):**
     - Why Full Fine-Tuning fails on consumer GPUs (Memory calculation: 16-18 bytes per param!).
@@ -108,36 +108,34 @@ Har din ke 5–6 ghante ko hum **3 structured blocks** me divide karenge:
     - **Quantization:**
       - FP32 $\to$ FP16 / BF16 $\to$ INT8 $\to$ 4-bit NormalFloat (NF4).
       - `bitsandbytes` library and Double Quantization mechanics.
-  - **Hours 2.5–4.5 (Hands-on Code):**
+  - **Hours 2.5–4.5 (Hands-on Code & Notes):**
     - `LoraConfig` setup via `peft` library.
     - `BitsAndBytesConfig` (4-bit loading, `bnb_4bit_quant_type="nf4"`).
-    - Loading a base model in 4-bit and inspecting parameter memory savings.
+    - Parameter memory savings & zero-latency `merge_and_unload`.
   - **Hours 4.5–5.5 (Notes & Quiz):**
-    - Update `03_qlora_unsloth_finetuning/notes.md` with Glossary, Math Formulas, and Q&A.
+    - Update `03_qlora_unsloth_finetuning/day4_peft_lora_quantization_notes.md` with Glossary, Easy Stories, and Q&A.
 
 ---
 
-### ⚪ Day 5 (Saturday, 2026-09-19) — Phase 5: Supervised Fine-Tuning (SFT) & Unsloth
-* **Status:** ⚪ **Upcoming**
-* **Target Time:** 5 – 6 Hours
+### 🟢 Day 5 (Saturday, 2026-09-19) — Phase 5: Supervised Fine-Tuning (SFT) & Unsloth
+* **Status:** 🟢 **COMPLETED (100%)**
+* **Time Spent:** ~5.5 Hours
 * **Syllabus & Schedule:**
-  - **Hours 1–2 (Theory):**
-    - What is Supervised Fine-Tuning (SFT)? Instruction $\to$ Response mapping.
-    - Prompt Templates: Alpaca format vs ChatML vs Llama-3 format.
-    - Response-only Loss masking (Loss calculated ONLY on the assistant answer, not the prompt!).
-    - Why Unsloth? Manual Triton GPU kernels, 2x-5x faster training, 70% less VRAM on Google Colab T4.
-  - **Hours 2–4.5 (Hands-on Colab Setup):**
-    - Setting up Google Colab with T4 GPU (16GB VRAM).
-    - Loading `unsloth` FastLanguageModel.
-    - Applying 4-bit QLoRA with Unsloth.
-    - Setting up TRL's `SFTTrainer`.
-  - **Hours 4.5–5.5 (Notes & Interview Prep):**
-    - Documenting SFT prompt masking & Unsloth architecture.
+  - **Hours 1–2 (Theory & Intuition):**
+    - What is Supervised Fine-Tuning (SFT)? Pre-training (sentence completer) vs SFT (helpful assistant).
+    - Prompt Templates: Alpaca format (`### Instruction:` and `### Response:`).
+    - Response-only Loss masking: The `-100` ignore index secret in PyTorch.
+    - Why Unsloth? OpenAI Triton GPU kernels, 5x faster training, 70% VRAM reduction.
+  - **Hours 2–4.5 (Architecture & Code):**
+    - `FastLanguageModel` 4-bit loading and LoRA injection.
+    - `SFTTrainer` vs normal `Trainer`.
+  - **Hours 4.5–5.5 (Notes & Spoken Pitches):**
+    - Created and compiled `03_qlora_unsloth_finetuning/day5_sft_unsloth_notes.md` with Glossary, Kahanis, and 5 Interview Q&As.
 
 ---
 
-### ⚪ Day 6 (Sunday, 2026-09-20) — Phase 6: Capstone Part 1: QA Assistant Fine-Tuning
-* **Status:** ⚪ **Upcoming**
+### 🟡 Day 6 (Sunday, 2026-09-20) — Phase 6: Capstone Part 1: QA Assistant Fine-Tuning
+* **Status:** 🟡 **IN PROGRESS (Active Now)**
 * **Target Time:** 5 – 6 Hours
 * **Capstone Focus:**
   - **Domain:** Data Science & AI Technical Interview Assistant.
