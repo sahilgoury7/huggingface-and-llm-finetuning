@@ -20,12 +20,12 @@ Har din ke 5–6 ghante ko hum **3 structured blocks** me divide karenge:
 | Day | Date | Module / Phase | Core Deliverables | Status |
 | :---: | :---: | :--- | :--- | :---: |
 | **Day 1** | **2026-09-15** | **Phase 1: HF Ecosystem, Pipelines & AutoClasses** | 5 Pipelines run, AutoModel QA, 3-Part Notes compiled | 🟢 **Completed** |
-| **Day 2** | **2026-09-16** | **Phase 2 & 3: Tokenization Mechanics & Datasets** | BPE/WordPiece, Padding/Masking, `datasets` `.map()` | 🟡 **Next Up** |
-| **Day 3** | **2026-09-17** | **Phase 4: 4 Real-World Portfolio Mini-Projects** | Sentiment tool, NER parser, Summarizer, Zero-shot bot | ⚪ Pending |
-| **Day 4** | **2026-09-18** | **Phase 5 & 6: Transfer Learning & HF Trainer API** | `TrainingArguments`, `Trainer` loop, Metrics & Eval | ⚪ Pending |
-| **Day 5** | **2026-09-19** | **Phase 7: PEFT, LoRA Mathematics & 4-Bit Quantization** | Matrix decomposition ($A \times B$), NF4 `bitsandbytes` | ⚪ Pending |
-| **Day 6** | **2026-09-20** | **Phase 8: SFT & Unsloth Acceleration on Colab T4** | Prompt formatting, Completion loss, Unsloth setup | ⚪ Pending |
-| **Day 7** | **2026-09-21** | **Phase 9: Capstone: Interview QA Assistant Fine-Tuning** | `data_science.csv` training run, GGUF/LoRA export | ⚪ Pending |
+| **Day 2** | **2026-09-16** | **Phase 2: Tokenization Mechanics & Datasets** | BPE/WordPiece, Dynamic Padding, `datasets` `.map()`, VRAM Math | 🟢 **Completed** |
+| **Day 3** | **2026-09-17** | **Phase 3: Transfer Learning & HF Trainer API** | `TrainingArguments`, Loss, Metrics, Dynamic Collators, Evaluation | 🟢 **Completed** |
+| **Day 4** | **2026-09-18** | **Phase 4: PEFT, LoRA Math & 4-Bit Quantization** | Matrix decomposition ($B \times A$), Rank ($r$), Alpha, NF4 bitsandbytes | 🟡 **Active Now** |
+| **Day 5** | **2026-09-19** | **Phase 5: SFT & Unsloth GPU Acceleration** | Prompt formatting, Completion-only loss, Unsloth T4 setup | ⚪ Pending |
+| **Day 6** | **2026-09-20** | **Phase 6: Capstone Part 1: QA Assistant Fine-Tuning** | `data_science.csv` training run on Colab T4, Loss curve analysis | ⚪ Pending |
+| **Day 7** | **2026-09-21** | **Phase 7: Capstone Part 2: Eval, LoRA Merge & GGUF** | RAG/LLM Eval, LoRA merge, GGUF export for local Ollama/vLLM | ⚪ Pending |
 
 ---
 
@@ -53,9 +53,9 @@ Har din ke 5–6 ghante ko hum **3 structured blocks** me divide karenge:
 
 ---
 
-### 🟡 Day 2 (Wednesday, 2026-09-16) — Tokenization & Datasets Deep Dive
-* **Status:** 🟡 **NEXT UP**
-* **Target Time:** 5 – 6 Hours
+### 🟢 Day 2 (Wednesday, 2026-09-16) — Tokenization & Datasets Deep Dive
+* **Status:** 🟢 **COMPLETED (100%)**
+* **Time Spent:** ~5.5 Hours
 * **Syllabus & Schedule:**
   - **Hours 1–2 (Theory):**
     - Word vs Character vs Sub-word tokenization (Why sub-words won NLP).
@@ -75,50 +75,32 @@ Har din ke 5–6 ghante ko hum **3 structured blocks** me divide karenge:
 
 ---
 
-### ⚪ Day 3 (Thursday, 2026-09-17) — 4 Production-Ready Mini-Projects
-* **Status:** ⚪ **Upcoming**
-* **Target Time:** 5 – 6 Hours
+### 🟢 Day 3 (Thursday, 2026-09-17) — Phase 3: Transfer Learning & Hugging Face `Trainer` API
+* **Status:** 🟢 **COMPLETED (100%)**
+* **Time Spent:** ~5.5 Hours
 * **Syllabus & Schedule:**
-  - **Hours 1–1.5 (Architecture & Design):**
-    - Project structuring, clean input-output interfaces, error handling.
-  - **Hours 1.5–4.5 (Building the 4 Mini-Projects):**
-    1. **Project 1:** Customer Review & Sentiment Classifier Utility.
-    2. **Project 2:** Resume & Contract Named Entity Extractor (NER).
-    3. **Project 3:** Technical Article & Meeting Notes Summarizer Tool.
-    4. **Project 4:** Zero-Shot Customer Support Ticket Router.
-  - **Hours 4.5–5.5 (Testing & Documentation):**
-    - Test edge cases, empty strings, and long inputs.
-    - Document clean usage in `01_huggingface_pipelines/`.
-
----
-
-### ⚪ Day 4 (Friday, 2026-09-18) — Transfer Learning & Hugging Face `Trainer`
-* **Status:** ⚪ **Upcoming**
-* **Target Time:** 5 – 6 Hours
-* **Syllabus & Schedule:**
-  - **Hours 1–2 (Theory):**
-    - What is Transfer Learning? Pre-training on trillions of tokens vs Domain Fine-Tuning.
+  - **Hours 1–2 (Core Concepts & Mechanics):**
+    - What is Transfer Learning? Pre-training (trillions of general tokens) vs Domain Fine-Tuning.
     - Feature Extraction (Freezing backbone) vs Full Fine-Tuning.
-    - Deep dive into `TrainingArguments`:
-      - `learning_rate`, `lr_scheduler_type` (linear vs cosine), `warmup_ratio`.
-      - `per_device_train_batch_size`, `gradient_accumulation_steps`.
-      - `fp16` / `bf16` mixed precision, `evaluation_strategy`, `save_steps`.
-  - **Hours 2–4.5 (Hands-on Code):**
+    - The `TrainingArguments` masterclass:
+      - `learning_rate`, `lr_scheduler_type` (linear vs cosine), `warmup_steps`.
+      - `per_device_train_batch_size`, `gradient_accumulation_steps` (Virtual large batches!).
+      - `fp16` / `bf16` mixed precision, `logging_steps`, `save_steps`, `save_total_limit`.
+  - **Hours 2–4.5 (Hands-on Training Loop):**
     - Setting up the Hugging Face `Trainer` class.
-    - `DataCollatorWithPadding` for high-performance dynamic batching.
-    - Evaluation metrics integration with `evaluate` library (Accuracy, F1, Loss).
-    - Running a training loop and evaluating loss curves.
-  - **Hours 4.5–5.5 (Notes & Quiz):**
-    - Update `02_transfer_learning/notes.md` with Glossary, Important Things, and Q&A.
+    - Integrating `DataCollatorForLanguageModeling(mlm=False)` / `DataCollatorWithPadding`.
+    - Monitoring training loss, validation loss curves, and perplexity.
+  - **Hours 4.5–5.5 (Notes & Interview Prep):**
+    - 3-Part Notes update & Top Interview Q&As on `Trainer` & `TrainingArguments`.
 
 ---
 
-### ⚪ Day 5 (Saturday, 2026-09-19) — PEFT: LoRA & 4-Bit Quantization
-* **Status:** ⚪ **Upcoming**
+### 🟡 Day 4 (Friday, 2026-09-18) — Phase 4: PEFT, LoRA Math & 4-Bit Quantization
+* **Status:** 🟡 **IN PROGRESS (Active Now)**
 * **Target Time:** 5 – 6 Hours
 * **Syllabus & Schedule:**
   - **Hours 1–2.5 (Core Math & Architecture):**
-    - Why Full Fine-Tuning fails on consumer GPUs (Memory calculation: 16-bit weights + gradients + optimizer states = 16 bytes per param!).
+    - Why Full Fine-Tuning fails on consumer GPUs (Memory calculation: 16-18 bytes per param!).
     - **LoRA (Low-Rank Adaptation):**
       - Math: $W = W_0 + \Delta W$, where $\Delta W = B \times A$.
       - Hyperparameters: Rank ($r$), Alpha ($\alpha$), Dropout, Target Modules (`q_proj`, `v_proj`, `k_proj`, `o_proj`).
@@ -135,14 +117,14 @@ Har din ke 5–6 ghante ko hum **3 structured blocks** me divide karenge:
 
 ---
 
-### ⚪ Day 6 (Sunday, 2026-09-20) — Supervised Fine-Tuning (SFT) & Unsloth
+### ⚪ Day 5 (Saturday, 2026-09-19) — Phase 5: Supervised Fine-Tuning (SFT) & Unsloth
 * **Status:** ⚪ **Upcoming**
 * **Target Time:** 5 – 6 Hours
 * **Syllabus & Schedule:**
   - **Hours 1–2 (Theory):**
     - What is Supervised Fine-Tuning (SFT)? Instruction $\to$ Response mapping.
     - Prompt Templates: Alpaca format vs ChatML vs Llama-3 format.
-    - Response-only Loss masking (Data collator that calculates loss ONLY on the assistant's answer, not the prompt!).
+    - Response-only Loss masking (Loss calculated ONLY on the assistant answer, not the prompt!).
     - Why Unsloth? Manual Triton GPU kernels, 2x-5x faster training, 70% less VRAM on Google Colab T4.
   - **Hours 2–4.5 (Hands-on Colab Setup):**
     - Setting up Google Colab with T4 GPU (16GB VRAM).
@@ -154,17 +136,26 @@ Har din ke 5–6 ghante ko hum **3 structured blocks** me divide karenge:
 
 ---
 
-### ⚪ Day 7 (Monday, 2026-09-21) — Capstone Project: Technical Interview QA Assistant
+### ⚪ Day 6 (Sunday, 2026-09-20) — Phase 6: Capstone Part 1: QA Assistant Fine-Tuning
 * **Status:** ⚪ **Upcoming**
 * **Target Time:** 5 – 6 Hours
 * **Capstone Focus:**
-  - **Domain:** Data Science & AI Interview Prep Assistant.
+  - **Domain:** Data Science & AI Technical Interview Assistant.
   - **Dataset:** [`data_science.csv`](https://github.com/AshishJangra27/datasets/tree/main/Intervew%20Questions) (Question-Answer pairs).
 * **Execution Plan:**
-  - **Hours 1–1.5:** Data cleaning, splitting, and prompt formatting (System prompt + User question + Model answer).
-  - **Hours 1.5–3.5:** 4-bit QLoRA Fine-tuning run on Colab T4 GPU with `SFTTrainer`.
-  - **Hours 3.5–4.5:** Qualitative testing on unseen, complex Data Science interview questions (Comparing Base vs Fine-Tuned model).
-  - **Hours 4.5–5.5:** Saving LoRA adapters, merging with base model, exporting GGUF format for local Ollama/vLLM inference, and final portfolio documentation!
+  - **Hours 1–2:** Data cleaning, splitting, and prompt formatting (System prompt + Question + Ideal Answer).
+  - **Hours 2–5:** End-to-end 4-bit QLoRA Fine-tuning run on Colab T4 GPU with `SFTTrainer`.
+  - **Hours 5–6:** Loss curve analysis, convergence check, and saving checkpoints.
+
+---
+
+### ⚪ Day 7 (Monday, 2026-09-21) — Phase 7: Capstone Part 2: Evaluation, LoRA Merge & GGUF
+* **Status:** ⚪ **Upcoming**
+* **Target Time:** 5 – 6 Hours
+* **Execution Plan:**
+  - **Hours 1–2.5:** Rigorous Model Evaluation (Base vs Fine-Tuned qualitative comparison on unseen interview questions, ROUGE & Perplexity).
+  - **Hours 2.5–4:** Saving LoRA adapters & Merging 16-bit weights with the base model.
+  - **Hours 4–5.5:** Exporting to **GGUF format** (for local Ollama/vLLM inference) + Final portfolio documentation and LinkedIn post write-up!
 
 ---
 
@@ -173,3 +164,5 @@ Har din ke 5–6 ghante ko hum **3 structured blocks** me divide karenge:
 | Date | Day | Phase | Topics Covered | Daily Reflection & Outcome |
 | :---: | :---: | :---: | :--- | :--- |
 | **2026-09-15** | **Day 1** | Phase 1 | HF Ecosystem, Model Cards, Pipelines vs AutoClasses, 5 Tasks, Python 3.13 debugging | Completed Phase 1 hands-on. Built deep intuition on pipeline lifecycle, AutoModel QA, Beam Search, and Zero-Shot NLI. Compiled 3-Part Notes. |
+| **2026-09-16** | **Day 2** | Phase 2 & 3 | Sub-word Tokenization (BPE/WordPiece/SentencePiece), Dynamic Padding, Attention Mask, `load_dataset()`, VRAM Math | Mastered tokenization mechanics, the restaurant table padding analogy, Apache Arrow mmap, Ashish Sir's cell 10 & 12 VRAM math, and QLoRA 4-bit necessity. Compiled 3-Part Notes. |
+| **2026-09-17** | **Day 3** | Phase 3 | Transfer Learning, Catastrophic Forgetting, `TrainingArguments`, `DataCollatorForLanguageModeling(mlm=False)`, Trainer Loop | Successfully executed live training loop in Colab on healthcare dataset. Observed training loss drop from 4.53 to 4.29, saved model shards, and mastered NaN debugging & effective batch sizes. |

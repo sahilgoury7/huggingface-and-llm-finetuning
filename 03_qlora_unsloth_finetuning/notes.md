@@ -35,3 +35,4 @@
 
 ## 📓 Notebook Reference
 - [LLM_Finetunning.ipynb](./LLM_Finetunning.ipynb)
+- [Day 4 Notes: PEFT, LoRA Math & Quantization](./day4_peft_lora_quantization_notes.md)
