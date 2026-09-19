@@ -45,7 +45,7 @@
 
 | Folder | Module Focus | Core Project |
 | :--- | :--- | :--- |
-| [**01_huggingface_pipelines**](./01_huggingface_pipelines/notes.md) | Part 1: HF Hub, Pipelines, AutoClasses & Datasets | Multiple Mini-Projects using Pipelines |
+| [**01_huggingface_pipelines**](./01_huggingface_pipelines/day1_hf_basics_and_pipelines_notes.md) | Part 1: HF Hub, Pipelines, AutoClasses & Datasets | Multiple Mini-Projects using Pipelines |
 | [**02_transfer_learning**](./02_transfer_learning/notes.md) | Part 2A: Transfer Learning, `TrainingArguments` & `Trainer` | Transfer Learning Project Setup |
 | [**03_qlora_unsloth_finetuning**](./03_qlora_unsloth_finetuning/notes.md) | Part 2B: LoRA, 4-bit Quantization, SFT & Unsloth | Data Science Interview QA Fine-Tuned Model |
 

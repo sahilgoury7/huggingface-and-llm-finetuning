@@ -49,7 +49,7 @@ Har din ke 5–6 ghante ko hum **3 structured blocks** me divide karenge:
     - Summarization with `AutoModelForSeq2SeqLM` & Beam Search (`num_beams=4`)
     - Zero-Shot Classification with NLI (Natural Language Inference)
   - [x] Debugging: Python 3.13 task strings & multimodal DocVQA errors.
-  - [x] Structured 3-Part Notes compiled in `01_huggingface_pipelines/notes.md`.
+  - [x] Structured 3-Part Notes compiled in `01_huggingface_pipelines/day1_hf_basics_and_pipelines_notes.md`.
 
 ---
 
