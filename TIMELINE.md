@@ -24,7 +24,7 @@ Har din ke 5–6 ghante ko hum **3 structured blocks** me divide karenge:
 | **Day 3** | **2026-09-17** | **Phase 3: Transfer Learning & HF Trainer API** | `TrainingArguments`, Loss, Metrics, Dynamic Collators, Evaluation | 🟢 **Completed** |
 | **Day 4** | **2026-09-18** | **Phase 4: PEFT, LoRA Math & 4-Bit Quantization** | Matrix decomposition ($B \times A$), Rank ($r$), Alpha, NF4 bitsandbytes | 🟢 **Completed** |
 | **Day 5** | **2026-09-19** | **Phase 5: SFT & Unsloth GPU Acceleration** | Prompt formatting, Completion-only loss, Unsloth T4 setup | 🟢 **Completed** |
-| **Day 6** | **2026-09-20** | **Phase 6: Capstone Part 1: QA Assistant Fine-Tuning** | `data_science.csv` training run on Colab T4, Loss curve analysis | 🟡 **Active Now** |
+| **Day 6** | **2026-09-20** | **Phase 6: Capstone Part 1: AI Medical Assistant (ChatDoctor QA)** | LLaMA-3 8B 4-bit QLoRA, Loss 2.87 $\to$ 1.89, Gradio Live Demo | 🟢 **Completed** |
 | **Day 7** | **2026-09-21** | **Phase 7: Capstone Part 2: Eval, LoRA Merge & GGUF** | RAG/LLM Eval, LoRA merge, GGUF export for local Ollama/vLLM | ⚪ Pending |
 
 ---
@@ -134,16 +134,23 @@ Har din ke 5–6 ghante ko hum **3 structured blocks** me divide karenge:
 
 ---
 
-### 🟡 Day 6 (Sunday, 2026-09-20) — Phase 6: Capstone Part 1: QA Assistant Fine-Tuning
-* **Status:** 🟡 **IN PROGRESS (Active Now)**
-* **Target Time:** 5 – 6 Hours
+---
+
+### 🟢 Day 6 (Sunday, 2026-09-20) — Phase 6: Capstone Part 1: AI Medical Assistant (ChatDoctor QA)
+* **Status:** 🟢 **COMPLETED (100%)**
+* **Time Spent:** ~5.5 Hours
 * **Capstone Focus:**
-  - **Domain:** Data Science & AI Technical Interview Assistant.
-  - **Dataset:** [`data_science.csv`](https://github.com/AshishJangra27/datasets/tree/main/Intervew%20Questions) (Question-Answer pairs).
-* **Execution Plan:**
-  - **Hours 1–2:** Data cleaning, splitting, and prompt formatting (System prompt + Question + Ideal Answer).
-  - **Hours 2–5:** End-to-end 4-bit QLoRA Fine-tuning run on Colab T4 GPU with `SFTTrainer`.
-  - **Hours 5–6:** Loss curve analysis, convergence check, and saving checkpoints.
+  - **Domain:** AI Medical Healthcare Assistant (ChatDoctor QA).
+  - **Dataset:** [`lavita/ChatDoctor-HealthCareMagic-100k`](https://huggingface.co/datasets/lavita/ChatDoctor-HealthCareMagic-100k) (100k+ doctor-patient consultations).
+* **Accomplishments & Deliverables:**
+  - [x] Data inspection, word count EDA (Patient query: ~80 words, Doctor advice: ~102 words).
+  - [x] Filtered dataset to < 350 words (1,924 clean samples, strictly under 512 tokens).
+  - [x] LLaMA-3 8B loaded in 4-bit NF4 with Unsloth GPU acceleration.
+  - [x] LoRA adapters configured ($r=16, \alpha=16$, all linear layers, only **0.52%** trainable params).
+  - [x] Stanford Alpaca prompt formatting applied with `tokenizer.eos_token` (`<|end_of_text|>`).
+  - [x] SFT training executed with `SFTTrainer` (60 steps, Loss dropped from `2.87` to `1.89`).
+  - [x] LoRA adapters saved locally (`medical_llama3_lora`).
+  - [x] Deployed live Gradio web demo (`share=True`) featuring Multi-Turn Conversational Memory & Anti-Repetition tuning (`temperature=0.7`, `repetition_penalty=1.15`).
 
 ---
 
@@ -151,9 +158,9 @@ Har din ke 5–6 ghante ko hum **3 structured blocks** me divide karenge:
 * **Status:** ⚪ **Upcoming**
 * **Target Time:** 5 – 6 Hours
 * **Execution Plan:**
-  - **Hours 1–2.5:** Rigorous Model Evaluation (Base vs Fine-Tuned qualitative comparison on unseen interview questions, ROUGE & Perplexity).
+  - **Hours 1–2.5:** Rigorous Model Evaluation (Base vs Fine-Tuned qualitative comparison on unseen medical queries, clinical metrics).
   - **Hours 2.5–4:** Saving LoRA adapters & Merging 16-bit weights with the base model.
-  - **Hours 4–5.5:** Exporting to **GGUF format** (for local Ollama/vLLM inference) + Final portfolio documentation and LinkedIn post write-up!
+  - **Hours 4–5.5:** Exporting to **GGUF format** / Hugging Face Hub push + Final portfolio documentation and LinkedIn post write-up!
 
 ---
 
@@ -164,3 +171,7 @@ Har din ke 5–6 ghante ko hum **3 structured blocks** me divide karenge:
 | **2026-09-15** | **Day 1** | Phase 1 | HF Ecosystem, Model Cards, Pipelines vs AutoClasses, 5 Tasks, Python 3.13 debugging | Completed Phase 1 hands-on. Built deep intuition on pipeline lifecycle, AutoModel QA, Beam Search, and Zero-Shot NLI. Compiled 3-Part Notes. |
 | **2026-09-16** | **Day 2** | Phase 2 & 3 | Sub-word Tokenization (BPE/WordPiece/SentencePiece), Dynamic Padding, Attention Mask, `load_dataset()`, VRAM Math | Mastered tokenization mechanics, the restaurant table padding analogy, Apache Arrow mmap, Ashish Sir's cell 10 & 12 VRAM math, and QLoRA 4-bit necessity. Compiled 3-Part Notes. |
 | **2026-09-17** | **Day 3** | Phase 3 | Transfer Learning, Catastrophic Forgetting, `TrainingArguments`, `DataCollatorForLanguageModeling(mlm=False)`, Trainer Loop | Successfully executed live training loop in Colab on healthcare dataset. Observed training loss drop from 4.53 to 4.29, saved model shards, and mastered NaN debugging & effective batch sizes. |
+| **2026-09-18** | **Day 4** | Phase 4 | PEFT, LoRA Matrix Decomposition ($B \times A$), Rank ($r$), Alpha, NF4 Quantization | Mastered low-rank decomposition math, double quantization, and bitsandbytes 4-bit VRAM savings. Trainable parameters reduced from 8B to 41.9M (0.52%). |
+| **2026-09-19** | **Day 5** | Phase 5 | Supervised Fine-Tuning (SFT), Alpaca Prompt Formatting, Response-Only Loss Masking (`-100`), Unsloth Triton Kernels | Learned SFT mechanics, why pre-trained models need instruction tuning, and how Unsloth accelerates training by 5x while slashing VRAM by 70%. |
+| **2026-09-20** | **Day 6** | Phase 6 | Capstone: AI Medical Assistant (ChatDoctor QA), LLaMA-3 8B 4-bit QLoRA, SFTTrainer, Gradio Live Web Demo | Fine-tuned LLaMA-3 8B on Colab Tesla T4 GPU. Loss reduced from 2.87 to 1.89. Deployed live Gradio demo with multi-turn conversational memory and anti-repetition penalty. |
+

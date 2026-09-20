@@ -35,9 +35,10 @@
 * **Quantization** (FP32 $\to$ FP16 $\to$ INT8 $\to$ 4-bit NormalFloat NF4 via `bitsandbytes`)
 * **Supervised Fine-Tuning (SFT)** (Instruction-response prompt formatting, loss computation on completions)
 * **🎯 Project: Transfer Learning & QLoRA Capstone Project**
-  * **Domain:** Technical Data Science Interview QA Assistant
-  * **Selected Dataset:** [`data_science.csv`](https://github.com/AshishJangra27/datasets/tree/main/Intervew%20Questions) (Question-Answer pairs)
-  * **Execution:** Train on Google Colab T4 GPU with 4-bit QLoRA, evaluate loss, and test generated interview responses.
+  * **Domain:** AI Medical Healthcare Assistant (ChatDoctor QA)
+  * **Selected Dataset:** [`lavita/ChatDoctor-HealthCareMagic-100k`](https://huggingface.co/datasets/lavita/ChatDoctor-HealthCareMagic-100k) (100k+ doctor-patient consultations)
+  * **Execution:** Train LLaMA-3 8B on Google Colab T4 GPU with 4-bit QLoRA and Unsloth acceleration.
+  * **Deployment:** Interactive Gradio Web Demo with multi-turn conversational memory (`share=True`).
 
 ---
 
@@ -48,7 +49,7 @@
 | [**01_huggingface_pipelines**](./01_huggingface_pipelines/day1_hf_basics_and_pipelines_notes.md) | Part 1: HF Hub, Pipelines, AutoClasses & Datasets | Multiple Mini-Projects using Pipelines |
 | [**02_transfer_learning**](./02_transfer_learning/notes.md) | Part 2A: Transfer Learning, `TrainingArguments` & `Trainer` | Transfer Learning Project Setup |
 | [**03_qlora_unsloth_finetuning**](./03_qlora_unsloth_finetuning/notes.md) | Part 2B: LoRA, 4-bit Quantization, SFT & Unsloth | Foundation for QLoRA & SFT |
-| [**04_capstone_qa_assistant**](./04_capstone_qa_assistant/day6_capstone_qa_assistant_notes.md) | Part 3: Capstone Project (Data Science Interview QA) | End-to-End Fine-Tuned LLaMA-3 Assistant |
+| [**04_capstone_qa_assistant**](./04_capstone_qa_assistant/day6_capstone_qa_assistant_notes.md) | Part 3: Capstone Project (AI Medical Healthcare Assistant) | Fine-Tuned LLaMA-3 8B with Gradio Live Demo |
 
 ---
 
