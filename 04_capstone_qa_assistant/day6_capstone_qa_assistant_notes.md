@@ -409,3 +409,28 @@ Yeh 4 libraries LLM Fine-Tuning ke **4 Pahiye (Wheels)** hain. Agar inme se ek b
 | **`accelerate`** | **Hardware Manager:** GPU memory, mixed precision (`fp16`), aur gradient accumulation ko manage karta hai. | Car ka Power Steering aur Gearbox jo engine ki power ko smoothly control karta hai. | PyTorch me manual CUDA loops aur OOM (Out Of Memory) errors se ladna padega. |
 | **`bitsandbytes`** | **Quantization Engine:** 16-bit ke bhaari model ko 4-bit NormalFloat (NF4) me shrink karta hai. | Bhaari file ko ZIP karke chota karne wala WinRAR software. | 16GB ka model GPU me aayega hi nahi; Colab shuru hone se pehle hi crash ho jayega. |
 
+---
+
+### 🧩 Command 3: `FastLanguageModel.get_peft_model(...)` LoRA Hyperparameters Breakdown
+```python
+model = FastLanguageModel.get_peft_model(
+    model,
+    r=16,
+    target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+    lora_alpha=16,
+    lora_dropout=0,
+    bias="none",
+    use_gradient_checkpointing=True,
+    random_state=3407,
+)
+```
+
+| Parameter | Asli Kaam & Formula | Intuition (Asli Zindagi) |
+| :--- | :--- | :--- |
+| **`r = 16`** *(Rank)* | LoRA decomposition matrices ($A \times B$) ki inner dimension/width set karta hai. | 8-lane ke highway ke side me sirf ek **16-lane ki patli service road** banana jahan nayi learning hogi. |
+| **`lora_alpha = 16`** *(Scaling)* | $\text{Scaling} = \frac{\alpha}{r} = \frac{16}{16} = 1.0$. Nayi learning aur base model ke beech volume/weight balance set karta hai. | **Volume Knob:** $1.0\times$ ka matlab hai LoRA ki seekhi hui baaton ko 100% normal balance ke sath suno. |
+| **`target_modules`** *(7 Doors)* | 4 Self-Attention layers (`q, k, v, o_proj`) + 3 MLP layers (`gate, up, down_proj`). | Model ke dimaag ke **saare 7 darwaze kholna** taaki SQL ke logic aur syntax ko har angle se seekh sake. |
+| **`use_gradient_checkpointing=True`** | Saare intermediate activations memory me store nahi karta, sirf checkpoints yaad rakhta hai. | **VRAM Life-Saver:** GPU memory consumption **50% kam** ho jati hai (Colab crash se bachta hai). |
+| **`lora_dropout = 0`** | Unsloth ke custom Triton GPU kernels me dropout 0 rakhne se execution speed 2x fast rehti hai. | Beech ke unnecessary speed-breakers hata kar superfast highway banana. |
+| **`random_state = 3407`** | Fixed random seed taaki training ke results har baar identical aur mathematically consistent aayein. | Famous research finding ("Torch.manual_seed(3407) is all you need") for optimal convergence. |
+
