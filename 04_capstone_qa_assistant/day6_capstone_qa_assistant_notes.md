@@ -343,6 +343,15 @@ demo.launch(share=True)
 
 ---
 
+### Q6: "Text-to-SQL task ke liye aapne `unsloth/mistral-7b-v0.3-bnb-4bit` model hi kyun chuna?"
+* **Candidate Answer (Hinglish):**  
+  *"Sir, Text-to-SQL ke liye humne `unsloth/mistral-7b-v0.3-bnb-4bit` chuna kyunki Mistral ka logical reasoning aur SQL benchmark 7B category mein top-tier hai. 4-bit NF4 quantization se base model sirf ~4.5GB VRAM leta hai, jisse free Colab T4 GPU par bina OOM crash ke QLoRA fine-tuning feasible ho jati hai."*
+* **English:**  
+  *"We selected `unsloth/mistral-7b-v0.3-bnb-4bit` because Mistral 7B offers state-of-the-art reasoning and code generation capabilities in the 7B category, outperforming larger legacy models on SQL benchmarks. The 4-bit NormalFloat (NF4) quantization compresses the base model to ~4.5GB VRAM, allowing stable QLoRA fine-tuning on a single free Tesla T4 GPU without memory exhaustion."*
+* **💡 Golden Tip:** Interviewer ko hamesha 3 points quote karein: 1) Mistral's SQL superiority, 2) 7B parameter sweet spot, aur 3) 4-bit NF4 VRAM reduction (~4.5GB).
+
+---
+
 # 🎙️ Part 5: Interview Spoken Pitches (Resume / Portfolio)
 
 ### 🗣️ Hinglish Pitch (Networking / Interview intro):
@@ -350,3 +359,53 @@ demo.launch(share=True)
 
 ### 🗣️ English Pitch:
 *"I fine-tuned Meta's LLaMA-3 8B into a domain-specific Medical Healthcare Assistant using the ChatDoctor dataset comprising over 100k real clinical consultations. To train efficiently on a single consumer-grade T4 GPU (16GB VRAM), I implemented 4-bit NF4 Quantization and QLoRA via Unsloth, reducing trainable parameters to just 0.52% (41.9M). The model was trained using TRL's SFTTrainer with Alpaca prompt formatting and response-only loss masking, achieving a loss reduction from 2.87 to 1.89 in under 10 minutes. For production deployment, I built a multi-turn Gradio interface featuring conversational context buffers and anti-repetition decoding penalties, delivering empathetic, clinically grounded medical guidance."*
+
+---
+
+# 🔬 Part 6: Deep-Dive Engineering Anatomy (Command-by-Command Breakdown)
+
+### 🧩 Command 1: Unsloth & Unsloth Zoo Installation Deep-Dive
+```bash
+!pip install --no-deps "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git"
+!pip install --no-deps unsloth_zoo
+```
+
+#### 🔍 Har Ek Word Ka Asli Matlab & Engineering Intuition:
+
+1. **`!` (Exclamation Mark):**
+   * **Matlab:** Shell / Bash Escape operator.
+   * **Kyun Lagaya:** Jupyter/Colab notebook by default Python code interpret karta hai. Lekin `pip` Python ka function nahi hai, yeh Linux Operating System (Terminal) ka command hai. `!` notebook ko bolta hai: *"Python ko bolo chup rahe, yeh command seedha Linux Terminal par run karo!"*
+
+2. **`pip install`:**
+   * **Matlab:** Python Package Installer se libraries download karke Colab ke environment me set karna.
+
+3. **`--no-deps` (THE MOST CRITICAL FLAG - Dependency Hell Se Bachao!):**
+   * **Matlab:** "NO DEPENDENCIES" (Bina kisi extra dependent library ke install karo).
+   * **Kyun Zaroori Hai:** Google Colab ke paas pehle se uska apna custom **PyTorch, Torchvision, aur CUDA drivers** pre-installed hote hain.
+   * **Khatra:** Agar hum bina `--no-deps` ke normal `pip install unsloth` karenge, toh pip Unsloth ki purani dependencies (jaise alag PyTorch version ya xformers) download karke Colab ke existing PyTorch ko overwrite/uninstall kar dega! Isse **CUDA crash** ho jayega aur GPU detect hona band ho jayega.
+   * **Fayda:** `--no-deps` pip ko order deta hai: *"Sirf aur sirf Unsloth ka core folder utha kar laa, baaki kisi bhi library (PyTorch, CUDA) ko haath mat lagana jo pehle se Colab me mojood hai!"*
+
+4. **`[colab-new]` (Extras / Environment Flavor):**
+   * **Matlab:** Python packaging me square brackets `[...]` ke andar "Extras" hote hain.
+   * **Kyun Lagaya:** Unsloth ke paas alag-alag platforms ke liye special patches hote hain (jaise `[kaggle]`, `[conda]`, `[colab-new]`). `colab-new` ka matlab hai Google Colab ke latest Linux environment, Python 3.10+, aur naye GPU drivers ke liye jo special Triton kernel optimizations bane hain, unhe activate karo.
+
+5. **`@ git+https://github.com/unslothai/unsloth.git` (Bleeding-Edge Git Install):**
+   * **Matlab:** PyPI (`pypi.org`) ke bajaye seedha Unsloth ke official GitHub repository se live source code clone karke install karna.
+   * **Kyun Zaroori Hai:** PyPI par stable version update hone me hafte ya mahine lagte hain. Unsloth ke creators roz naye PyTorch aur LLaMA/Mistral ke fast bug-fixes GitHub par push karte hain. Seedha Git repo se install karne se hume sabse latest, bug-free aur fastest version milta hai.
+
+---
+
+### 🧩 Command 2: Hugging Face Ki 4 Core Fine-Tuning Libraries
+```bash
+!pip install --no-deps trl peft accelerate bitsandbytes
+```
+
+Yeh 4 libraries LLM Fine-Tuning ke **4 Pahiye (Wheels)** hain. Agar inme se ek bhi gayab ho, toh gaadi nahi chal sakti:
+
+| Library | Asli Kaam (Role) | Asli Zindagi Ka Example | Iske Bina Kya Hoga? |
+| :--- | :--- | :--- | :--- |
+| **`trl`** *(Transformer Reinforcement Learning)* | **Trainer:** Humare model ko `SFTTrainer` deta hai jo Alpaca prompt aur `-100` loss masking sambhalta hai. | School ka Class Teacher jo student ko instruction-answer sikhata hai. | Normal `Trainer` use karna padega jisme manual formatting aur padding ka sar-dard hoga. |
+| **`peft`** *(Parameter-Efficient Fine-Tuning)* | **LoRA Engine:** Original 8B weights ko freeze karke sirf 0.5% adapter matrices inject karta hai. | Moti textbook par sticky notes chipkane wala tool. | Full model train karna padega jiske liye 64GB VRAM chahiye (Colab crash ho jayega). |
+| **`accelerate`** | **Hardware Manager:** GPU memory, mixed precision (`fp16`), aur gradient accumulation ko manage karta hai. | Car ka Power Steering aur Gearbox jo engine ki power ko smoothly control karta hai. | PyTorch me manual CUDA loops aur OOM (Out Of Memory) errors se ladna padega. |
+| **`bitsandbytes`** | **Quantization Engine:** 16-bit ke bhaari model ko 4-bit NormalFloat (NF4) me shrink karta hai. | Bhaari file ko ZIP karke chota karne wala WinRAR software. | 16GB ka model GPU me aayega hi nahi; Colab shuru hone se pehle hi crash ho jayega. |
+

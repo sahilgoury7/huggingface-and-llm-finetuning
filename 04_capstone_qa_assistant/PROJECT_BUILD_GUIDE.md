@@ -25,8 +25,9 @@ Unsloth (5x faster fine-tuning engine), Hugging Face TRL, PEFT, aur 4-bit Quanti
 # CELL 1: Required Libraries Installation
 # ==============================================================================
 
-# 1. Unsloth install kar rahe hain (Triton GPU acceleration ke liye)
+# 1. Unsloth aur Unsloth Zoo install kar rahe hain (Triton GPU acceleration & Model architectures ke liye)
 !pip install --no-deps "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git"
+!pip install --no-deps unsloth_zoo
 
 # 2. Hugging Face ki core libraries (TRL for SFTTrainer, PEFT for LoRA, BitsAndBytes for 4-bit)
 !pip install --no-deps trl peft accelerate bitsandbytes
