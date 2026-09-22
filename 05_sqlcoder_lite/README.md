@@ -118,18 +118,9 @@ demo.launch(share=True)
 
 ---
 
-## 🎤 Interview Cheat Sheet & Pitch
+## 📚 Technical Interview Guide & Deep Dive
 
-### 30-Second Elevator Pitch:
-> *"I fine-tuned Mistral-7B into an enterprise-grade Text-to-SQL assistant called **SQLCoder-Lite** using the `b-mc2/sql-create-context` dataset. To train feasibly on a single free Tesla T4 GPU (16GB VRAM), I utilized 4-bit NF4 Quantization and QLoRA via Unsloth, reducing trainable parameters to just 0.58% (41.9M). The model was trained using TRL's SFTTrainer with Alpaca prompt templates, converging to a steady loss of 0.41 in under 10 minutes. For production deployment, I built a clean Gradio interface utilizing deterministic decoding (`temperature=0.1`) that enables non-technical users to query relational databases with 100% data privacy."*
+For detailed technical interview questions, architectural trade-offs (e.g., **Fine-Tuning vs AI Agents vs Prompt-based Chatbots**), QLoRA parameter mathematics, and production evaluation strategies:
 
-### Top 3 Technical Interview Questions:
+👉 **[Read the SQLCoder-Lite Interview Q&A Guide](./INTERVIEW_QA.md)**
 
-**Q1: Why did you use `temperature=0.1` for Text-to-SQL instead of `0.7`?**  
-*Answer:* SQL is a deterministic programming language with exact syntax. A high temperature introduces randomness and hallucination (invalid column names or syntax errors). A near-zero temperature (greedy decoding) ensures the model picks the highest-probability keyword and matches schema column names verbatim.
-
-**Q2: Why fine-tune a local 7B model instead of just calling ChatGPT/Claude API?**  
-*Answer:* Two critical reasons: **Data Privacy** and **Cost**. In industries like Banking, Healthcare, and Defense, proprietary database schemas and queries cannot leave the private network due to regulatory compliance (GDPR/HIPAA/RBI). A self-hosted 7B model runs completely offline inside the company's private VPC with zero per-token API costs.
-
-**Q3: Why did your training loss stay in the 0.35 - 0.45 range from start to finish?**  
-*Answer:* Unlike open-ended conversational QA where entropy is high (loss starts at ~3.0 and drops to ~1.8), SQL code generation is strictly constrained. Because table DDL schemas and keywords are already supplied in the context prompt, cross-entropy loss is naturally much lower. 0.41 represents high-confidence token prediction.
