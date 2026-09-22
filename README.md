@@ -3,7 +3,8 @@
 > **Gen AI Batch 9 | Applied LLMs & Open-Source AI**  
 > **Instructor:** Ashish Jangra  
 > 
-> 📅 **[View Learning Journey & Progress Timeline](./TIMELINE.md)**
+> 📅 **[View Learning Journey & Progress Timeline](./TIMELINE.md)**  
+> 🎤 **[View Master Technical Interview Guide (Days 1–7 Q&As)](./MASTER_INTERVIEW_GUIDE.md)**
 
 ---
 
