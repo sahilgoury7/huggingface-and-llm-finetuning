@@ -53,8 +53,8 @@
 | [**01_huggingface_pipelines**](./01_huggingface_pipelines/day1_hf_basics_and_pipelines_notes.md) | Part 1: HF Hub, Pipelines, AutoClasses & Datasets | Multiple Mini-Projects using Pipelines |
 | [**02_transfer_learning**](./02_transfer_learning/notes.md) | Part 2A: Transfer Learning, `TrainingArguments` & `Trainer` | Transfer Learning Project Setup |
 | [**03_qlora_unsloth_finetuning**](./03_qlora_unsloth_finetuning/notes.md) | Part 2B: LoRA, 4-bit Quantization, SFT & Unsloth | Foundation for QLoRA & SFT |
-| [**04_capstone_medical_qa_assistant**](./04_capstone_medical_qa_assistant/day6_capstone_qa_assistant_notes.md) | Capstone 1: AI Medical Healthcare Assistant | Fine-Tuned LLaMA-3 8B with Gradio Live Demo |
-| [**05_capstone_sqlcoder_lite**](./05_capstone_sqlcoder_lite/README.md) | Capstone 2: Enterprise Text-to-SQL Assistant | Fine-Tuned Mistral-7B with Gradio Web Interface |
+| [**04_medical_chatdoctor**](./04_medical_chatdoctor/day6_capstone_qa_assistant_notes.md) | Capstone 1: AI Medical Healthcare Assistant | Fine-Tuned LLaMA-3 8B with Gradio Live Demo |
+| [**05_sqlcoder_lite**](./05_sqlcoder_lite/README.md) | Capstone 2: Enterprise Text-to-SQL Assistant | Fine-Tuned Mistral-7B with Gradio Web Interface |
 
 ---
 
