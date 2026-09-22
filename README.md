@@ -34,11 +34,15 @@
 * **Low Rank Adaptation (LoRA)** (Low-rank decomposition matrices $A \times B$, rank $r$, scaling $\alpha$)
 * **Quantization** (FP32 $\to$ FP16 $\to$ INT8 $\to$ 4-bit NormalFloat NF4 via `bitsandbytes`)
 * **Supervised Fine-Tuning (SFT)** (Instruction-response prompt formatting, loss computation on completions)
-* **🎯 Project: Transfer Learning & QLoRA Capstone Project**
-  * **Domain:** AI Medical Healthcare Assistant (ChatDoctor QA)
-  * **Selected Dataset:** [`lavita/ChatDoctor-HealthCareMagic-100k`](https://huggingface.co/datasets/lavita/ChatDoctor-HealthCareMagic-100k) (100k+ doctor-patient consultations)
-  * **Execution:** Train LLaMA-3 8B on Google Colab T4 GPU with 4-bit QLoRA and Unsloth acceleration.
-  * **Deployment:** Interactive Gradio Web Demo with multi-turn conversational memory (`share=True`).
+* **🎯 Project: Transfer Learning & QLoRA Capstone Projects**
+  * **Capstone 1 — AI Medical Healthcare Assistant (ChatDoctor QA):**
+    * **Selected Dataset:** [`lavita/ChatDoctor-HealthCareMagic-100k`](https://huggingface.co/datasets/lavita/ChatDoctor-HealthCareMagic-100k) (100k+ doctor-patient consultations)
+    * **Execution:** Train LLaMA-3 8B on Google Colab T4 GPU with 4-bit QLoRA and Unsloth acceleration.
+    * **Deployment:** Interactive Gradio Web Demo with multi-turn conversational memory (`share=True`).
+  * **Capstone 2 — SQLCoder-Lite (Enterprise Text-to-SQL Assistant):**
+    * **Selected Dataset:** [`b-mc2/sql-create-context`](https://huggingface.co/datasets/b-mc2/sql-create-context) (78.5k+ cross-domain SQL pairs with DDL schemas)
+    * **Execution:** Train Mistral-7B on Google Colab T4 GPU with 4-bit QLoRA and Unsloth acceleration (0.58% parameters trained).
+    * **Deployment:** Standalone Gradio Web Interface for instant schema-aware SQL query generation.
 
 ---
 
@@ -49,7 +53,8 @@
 | [**01_huggingface_pipelines**](./01_huggingface_pipelines/day1_hf_basics_and_pipelines_notes.md) | Part 1: HF Hub, Pipelines, AutoClasses & Datasets | Multiple Mini-Projects using Pipelines |
 | [**02_transfer_learning**](./02_transfer_learning/notes.md) | Part 2A: Transfer Learning, `TrainingArguments` & `Trainer` | Transfer Learning Project Setup |
 | [**03_qlora_unsloth_finetuning**](./03_qlora_unsloth_finetuning/notes.md) | Part 2B: LoRA, 4-bit Quantization, SFT & Unsloth | Foundation for QLoRA & SFT |
-| [**04_capstone_qa_assistant**](./04_capstone_qa_assistant/day6_capstone_qa_assistant_notes.md) | Part 3: Capstone Project (AI Medical Healthcare Assistant) | Fine-Tuned LLaMA-3 8B with Gradio Live Demo |
+| [**04_capstone_medical_qa_assistant**](./04_capstone_medical_qa_assistant/day6_capstone_qa_assistant_notes.md) | Capstone 1: AI Medical Healthcare Assistant | Fine-Tuned LLaMA-3 8B with Gradio Live Demo |
+| [**05_capstone_sqlcoder_lite**](./05_capstone_sqlcoder_lite/README.md) | Capstone 2: Enterprise Text-to-SQL Assistant | Fine-Tuned Mistral-7B with Gradio Web Interface |
 
 ---
 

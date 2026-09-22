@@ -434,3 +434,46 @@ model = FastLanguageModel.get_peft_model(
 | **`lora_dropout = 0`** | Unsloth ke custom Triton GPU kernels me dropout 0 rakhne se execution speed 2x fast rehti hai. | Beech ke unnecessary speed-breakers hata kar superfast highway banana. |
 | **`random_state = 3407`** | Fixed random seed taaki training ke results har baar identical aur mathematically consistent aayein. | Famous research finding ("Torch.manual_seed(3407) is all you need") for optimal convergence. |
 
+---
+
+### 🧩 Command 4: `TrainingArguments(...)` — Exam Ki Padhai Ka Time-Table
+```python
+training_args = TrainingArguments(
+    output_dir="outputs",                    # 1. Locker Room (Checkpoints folder)
+    per_device_train_batch_size=2,           # 2. Ek baar me sirf 2 sawal padho (VRAM safe)
+    gradient_accumulation_steps=4,           # 3. 8 sawal hone ke baad revision karo (Virtual Batch = 8)
+    warmup_steps=5,                          # 4. Shuru ke 5 minute dimaag stretch karo (Warm-up)
+    max_steps=60,                            # 5. Bas 8-10 minute ki solid padhai (Total 60 updates)
+    learning_rate=2e-4,                       # 6. Padhne ki normal, stable speed
+    fp16=not torch.cuda.is_bf16_supported(), # 7. Tesla T4 ke liye 16-bit speed booster
+    logging_steps=1,                         # 8. Har ball par score dekhna (Live loss check)
+    seed=3407,                               # 9. Consistent math seed
+)
+```
+
+#### 📖 Asli Zindagi Ki Kahani (Exam Ki Padhai):
+1. **`batch_size = 2`:** Ek sath 50 sawal khol kar baithoge toh dimaag ghum jayega (GPU crash). Isliye ek baar me sirf 2 sawal dekhenge.
+2. **`gradient_accumulation_steps = 4`:** Har 2 sawal ke baad revision nahi hota. 2 sawal padhe, fir 2, fir 2, fir 2 (total 8 sawal ho gaye). Ab ek sath revision kiya!
+3. **`warmup_steps = 5`:** Shuru ke 5 steps me dimaag dheere-dheere garam hota hai aur purane weights shock nahi hote.
+4. **`max_steps = 60`:** Lagatar 10 ghante padhoge toh Colab band ho jayega. 60 steps ka matlab hai aaraam se 8-10 minute padh kar pass hone laayak seekh jana.
+5. **`learning_rate = 2e-4`:** Padhne ki woh ideal speed jisme syllabus bhi complete ho aur sar ke upar se bhi na nikle.
+
+---
+
+### 🎯 Naye Project Mein Settings Decide Kaise Karein? (The 2-Minute Rule)
+
+Aapko koi formula ya math lagane ki bilkul zaroorat nahi hai! Asli zindagi me sirf **2 baatein** decide karni hoti hain:
+
+1. **Baat 1: "Folder ka naam kya rakhna hai?"**
+   - Medical project tha toh `"outputs"` rakha.
+   - SQL project hai toh **`output_dir = "outputs_sql"`** rakh do taaki purana model overwrite na ho.
+
+2. **Baat 2: "Training kitni der chalani hai?"**
+   - Agar quick test karna hai ki loss gir raha hai ya nahi $\to$ **`max_steps = 60`** (~6-8 minute).
+   - Agar final portfolio ke liye thoda aur gehra sikhana hai $\to$ **`max_steps = 100` ya `150`** (~12-15 minute).
+
+3. **Aur Baaki Sab? (`batch_size=2`, `accum=4`, `lr=2e-4`, `fp16=True`, `warmup=5`)**
+   - 👉 **UNHE CHHOONA BHI NAHI HAI!**
+   - Jaise car chalane se pehle aap roz car ke tyre ka size nahi badalte — tyre fixed rehte hain.
+   - Wahi yeh 5 numbers hain: Yeh Google Colab ke Tesla T4 GPU par 4-bit LoRA chalane ke **Fixed Golden Numbers** hain!
+

@@ -154,13 +154,21 @@ Har din ke 5–6 ghante ko hum **3 structured blocks** me divide karenge:
 
 ---
 
-### ⚪ Day 7 (Monday, 2026-09-21) — Phase 7: Capstone Part 2: Evaluation, LoRA Merge & GGUF
-* **Status:** ⚪ **Upcoming**
-* **Target Time:** 5 – 6 Hours
-* **Execution Plan:**
-  - **Hours 1–2.5:** Rigorous Model Evaluation (Base vs Fine-Tuned qualitative comparison on unseen medical queries, clinical metrics).
-  - **Hours 2.5–4:** Saving LoRA adapters & Merging 16-bit weights with the base model.
-  - **Hours 4–5.5:** Exporting to **GGUF format** / Hugging Face Hub push + Final portfolio documentation and LinkedIn post write-up!
+### 🟢 Day 7 (Tuesday, 2026-09-22) — Phase 7: Capstone Part 2: SQLCoder-Lite (Enterprise Text-to-SQL)
+* **Status:** 🟢 **COMPLETED (100%)**
+* **Time Spent:** ~5.5 Hours
+* **Capstone Focus:**
+  - **Domain:** Enterprise Text-to-SQL Assistant (`SQLCoder-Lite`).
+  - **Dataset:** [`b-mc2/sql-create-context`](https://huggingface.co/datasets/b-mc2/sql-create-context) (78,500+ cross-domain SQL pairs with DDL schemas).
+  - **Model:** `unsloth/mistral-7b-v0.3-bnb-4bit` (4-bit NF4 Quantization + QLoRA).
+* **Accomplishments & Deliverables:**
+  - [x] Statistical EDA: Total sequence length ~32.4 words (~50 tokens), 99th percentile safe under 512 tokens.
+  - [x] Fine-tuned Mistral-7B on Tesla T4 GPU (100 steps, batch size 2 × 4 = 8, lr=2e-4).
+  - [x] Achieved stable convergence in the Golden Zone: Loss dropped to **`0.415`** (Best loss: `0.321`).
+  - [x] Saved LoRA adapter weights locally (`sqlcoder_mistral_lora`, ~150MB).
+  - [x] Single-turn and multi-condition query inference verified on unseen table schemas.
+  - [x] Built and deployed interactive Gradio Web Interface for instant Text-to-SQL generation.
+  - [x] Dedicated workspace folder created: `05_capstone_sqlcoder_lite/` with full documentation.
 
 ---
 
@@ -173,6 +181,7 @@ Har din ke 5–6 ghante ko hum **3 structured blocks** me divide karenge:
 | **2026-09-17** | **Day 3** | Phase 3 | Transfer Learning, Catastrophic Forgetting, `TrainingArguments`, `DataCollatorForLanguageModeling(mlm=False)`, Trainer Loop | Successfully executed live training loop in Colab on healthcare dataset. Observed training loss drop from 4.53 to 4.29, saved model shards, and mastered NaN debugging & effective batch sizes. |
 | **2026-09-18** | **Day 4** | Phase 4 | PEFT, LoRA Matrix Decomposition ($B \times A$), Rank ($r$), Alpha, NF4 Quantization | Mastered low-rank decomposition math, double quantization, and bitsandbytes 4-bit VRAM savings. Trainable parameters reduced from 8B to 41.9M (0.52%). |
 | **2026-09-19** | **Day 5** | Phase 5 | Supervised Fine-Tuning (SFT), Alpaca Prompt Formatting, Response-Only Loss Masking (`-100`), Unsloth Triton Kernels | Learned SFT mechanics, why pre-trained models need instruction tuning, and how Unsloth accelerates training by 5x while slashing VRAM by 70%. |
-| **2026-09-20** | **Day 6** | Phase 6 | Capstone: AI Medical Assistant (ChatDoctor QA), LLaMA-3 8B 4-bit QLoRA, SFTTrainer, Gradio Live Web Demo | Fine-tuned LLaMA-3 8B on Colab Tesla T4 GPU. Loss reduced from 2.87 to 1.89. Deployed live Gradio demo with multi-turn conversational memory and anti-repetition penalty. |
-| **2026-09-21** | **Day 7** | Phase 7 | Text-to-SQL Architecture, Mistral-7B Deep-Dive, Sequence Length EDA, LoRA Hyperparameters Breakdown | Explored Text-to-SQL (`b-mc2/sql-create-context`) with Mistral-7B. Analyzed ~32-word sequence lengths, deep-dived into LoRA hyperparameters ($r=16, \alpha=16$, 7 target modules), and saved the complete ChatDoctor notebook to repo. |
+| **2026-09-20** | **Day 6** | Phase 6 | Capstone 1: AI Medical Assistant (ChatDoctor QA), LLaMA-3 8B 4-bit QLoRA, SFTTrainer, Gradio Live Web Demo | Fine-tuned LLaMA-3 8B on Colab Tesla T4 GPU. Loss reduced from 2.87 to 1.89. Deployed live Gradio demo with multi-turn conversational memory and anti-repetition penalty. Dedicated folder: `04_capstone_medical_qa_assistant`. |
+| **2026-09-22** | **Day 7** | Phase 7 | Capstone 2: SQLCoder-Lite (Enterprise Text-to-SQL), Mistral-7B 4-bit QLoRA, T4 SFTTrainer, Gradio Web App | Fine-tuned Mistral-7B on `b-mc2/sql-create-context`. Loss converged to 0.41 in 100 steps. Built standalone Gradio web interface. Reorganized repository with dedicated personal folder: `05_capstone_sqlcoder_lite`. |
+
 
